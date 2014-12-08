@@ -188,7 +188,7 @@ Target "BuildDll" DoNothing
 
 "All"
   ==> "NuGet"
-  //==> "BuildPackage"
+  ==> "BuildPackage"
 
 "BuildPackage"
   ==> "Release"
