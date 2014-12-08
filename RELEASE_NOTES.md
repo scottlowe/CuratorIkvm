@@ -1,3 +1,3 @@
-#### 0.5.0-beta - October 24 2013
+#### 0.5.4-beta - December 08 2014
 * Built using IKVM 8.0.5449.0 & Curator Recipes 2.7.0
-* Initial release
+* Initial Prerelease
