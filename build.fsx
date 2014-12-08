@@ -69,18 +69,18 @@ let release = LoadReleaseNotes "RELEASE_NOTES.md"
 //  csProjs |> Seq.iter genCSAssemblyInfo
 //)
 
-let downloadAndUnzipLib (binariesUri: string) (targetZip: string) = 
+let downloadAndUnzipLib (binariesUri: string) (targetZip: string) =
     let wc = new WebClient()
     wc.DownloadFile(new Uri(binariesUri), targetZip)
     Unzip "lib/" targetZip
     rm targetZip
 
 Target "DownloadMaven" (fun _ ->
-    downloadAndUnzipLib mavenBinariesUrl @"lib/maven.zip" 
+    downloadAndUnzipLib mavenBinariesUrl @"lib/maven.zip"
 )
 
 Target "DownloadIkvm" (fun _ ->
-    downloadAndUnzipLib ikvmBinariesUrl @"lib/ikvm.zip" 
+    downloadAndUnzipLib ikvmBinariesUrl @"lib/ikvm.zip"
 )
 
 Target "InstallMavenDeps" (fun _ ->
@@ -176,15 +176,15 @@ Target "All" DoNothing
 Target "BuildDll" DoNothing
 
 "BuildDll"
-    //==> "DownloadMaven"
-    //==> "InstallMavenDeps"
-    //==> "DownloadIkvm"
-    //==> "Build"
+    ==> "DownloadMaven"
+    ==> "InstallMavenDeps"
+    ==> "DownloadIkvm"
+    ==> "Build"
     ==> "All"
 
-//"Clean"
-//  ==> "BuildDll"
-//  ==> "All"
+"Clean"
+  ==> "BuildDll"
+  ==> "All"
 
 "All"
   ==> "NuGet"
