@@ -131,7 +131,7 @@ Target "NuGet" (fun _ ->
             OutputPath = "bin"
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
-            Dependencies = [ "IKVM.NET", ikvmVersion ]})
+            Dependencies = [ "IKVM", ikvmVersion ]})
         ("nuget/" + project + ".nuspec")
 )
 
