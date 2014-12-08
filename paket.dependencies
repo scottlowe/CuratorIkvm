@@ -1,10 +1,11 @@
 source https://nuget.org/api/v2
 
 nuget FSharp.Formatting
-nuget XUnit 
+nuget XUnit
 nuget XUnit.Runners
 nuget Nuget.CommandLine
 nuget FAKE
 nuget SourceLink.Fake
+nuget IKVM.NET ~> 8.0.5
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

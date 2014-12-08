@@ -131,7 +131,7 @@ Target "NuGet" (fun _ ->
             OutputPath = "bin"
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
-            Dependencies = [ "FSharp.Core", GetPackageVersion "packages" "IKVM.NET"]})
+            Dependencies = [ "IKVM.NET", GetPackageVersion "packages" "IKVM" ]})
         ("nuget/" + project + ".nuspec")
 )
 
@@ -188,7 +188,7 @@ Target "BuildDll" DoNothing
 
 "All"
   ==> "NuGet"
-  //==> "BuildPackage"
+  ==> "BuildPackage"
 
 "BuildPackage"
   ==> "Release"
