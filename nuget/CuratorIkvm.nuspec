@@ -17,6 +17,6 @@
     <dependencies />
   </metadata>
   <files>
-    <file src="..\bin\Curator.dll" target="lib/net40" />
+    <file src="..\bin\Curator.dll" target="lib/net45" />
   </files>
 </package>
