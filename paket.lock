@@ -1,12 +1,13 @@
 NUGET
   remote: https://nuget.org/api/v2
   specs:
-    FAKE (3.10.0)
+    FAKE (3.11.3)
     FSharp.Compiler.Service (0.0.67)
     FSharp.Formatting (2.4.36)
       FSharp.Compiler.Service (0.0.67)
       Microsoft.AspNet.Razor (2.0.30506.0)
       RazorEngine (3.3.0)
+    IKVM (8.0.5449)
     Microsoft.AspNet.Razor (2.0.30506.0)
     Microsoft.Bcl (1.1.9)
       Microsoft.Bcl.Build (>= 1.0.14)
@@ -25,5 +26,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (2fe520d2d3db76156871a78f7fed1717384bb681)
+    modules/Octokit/Octokit.fsx (0a5a284350252b22075e096e6906681ece6bda1f)
       Octokit (>= 0)
