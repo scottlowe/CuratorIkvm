@@ -16,8 +16,8 @@ open System.Net
 
 
 let project     = "CuratorIkvm"
-let summary     = "Curator client library for Zookeeper, IKVM version"
-let description = "Curator client library for Zookeeper. This is the IKVM version; which is to say that this is compiled from Java to .NET"
+let summary     = "Curator client library & recipes for Zookeeper: IKVM version."
+let description = "Curator client library & recipes for Zookeeper. This is the IKVM version; which is to say that this is compiled from Java to .NET"
 let authors     = [ "Scott Lowe" ]
 let tags        = "Curator C# .Net IKVM Zookeeper"
 
@@ -39,35 +39,6 @@ let gitRaw   = environVarOrDefault "gitRaw" "https://raw.github.com/scottlowe"
 
 // Read additional information from the release notes document
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
-
-//let genFSAssemblyInfo (projectPath) =
-//    let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
-//    let basePath = "src/" + projectName
-//    let fileName = basePath + "/AssemblyInfo.fs"
-//    CreateFSharpAssemblyInfo fileName
-//      [ Attribute.Title (projectName)
-//        Attribute.Product project
-//        Attribute.Description summary
-//        Attribute.Version release.AssemblyVersion
-//        Attribute.FileVersion release.AssemblyVersion ]
-//
-//let genCSAssemblyInfo (projectPath) =
-//    let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
-//    let basePath = "src/" + projectName + "/Properties"
-//    let fileName = basePath + "/AssemblyInfo.cs"
-//    CreateCSharpAssemblyInfo fileName
-//      [ Attribute.Title (projectName)
-//        Attribute.Product project
-//        Attribute.Description summary
-//        Attribute.Version release.AssemblyVersion
-//        Attribute.FileVersion release.AssemblyVersion ]
-
-//Target "AssemblyInfo" (fun _ ->
-//  let fsProjs =  !! "src/**/*.fsproj"
-//  let csProjs = !! "src/**/*.csproj"
-//  fsProjs |> Seq.iter genFSAssemblyInfo
-//  csProjs |> Seq.iter genCSAssemblyInfo
-//)
 
 let downloadAndUnzipLib (binariesUri: string) (targetZip: string) =
     let wc = new WebClient()
@@ -106,11 +77,17 @@ Target "CleanDocs" (fun _ ->
 Target "Build" (fun _ ->
     traceImportant "building with IKVM..."
 
+    let ikvmArgs =
+        let version = release.NugetVersion.Split('-') |> Seq.head
+        sprintf
+            "-lib:target/dependency -recurse:target/dependency -target:library -version:%s -out:bin/Curator.dll"
+            version
+
     let result =
         ExecProcess (fun info ->
             info.FileName <- sprintf "lib/ikvm-%s/bin/ikvmc.exe " ikvmVersion
             info.WorkingDirectory <- "./"
-            info.Arguments <- "-lib:target/dependency -recurse:target/dependency -target:library -out:bin/Curator.dll")
+            info.Arguments <- ikvmArgs)
             (TimeSpan.FromMinutes 5.0)
 
     if result <> 0 then
@@ -135,18 +112,6 @@ Target "NuGet" (fun _ ->
         ("nuget/" + project + ".nuspec")
 )
 
-//Target "ReleaseDocs" (fun _ ->
-//    let tempDocsDir = "temp/gh-pages"
-//    CleanDir tempDocsDir
-//    Repository.cloneSingleBranch "" (gitHome + "/" + gitName + ".git") "gh-pages" tempDocsDir
-//
-//    fullclean tempDocsDir
-//    CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
-//    StageAll tempDocsDir
-//    Git.Commit.Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
-//    Branches.push tempDocsDir
-//)
-
 #load "paket-files/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 open Octokit
 
@@ -157,13 +122,6 @@ Target "Release" (fun _ ->
 
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
-
-    // release on github
-    createClient (getBuildParamOrDefault "github-user" "") (getBuildParamOrDefault "github-pw" "")
-    |> createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    // TODO: |> uploadFile "PATH_TO_FILE"
-    |> releaseDraft
-    |> Async.RunSynchronously
 )
 
 Target "BuildPackage" DoNothing
