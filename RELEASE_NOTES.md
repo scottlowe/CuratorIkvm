@@ -1,3 +1,8 @@
+#### 0.6.1-beta - December 09 2014
+* Set assembly version in Curator.dll
+* Remove dead code
+* Make it clear in description that the Curator Recipes are included
+
 #### 0.6.0-beta - December 08 2014
 * Move from IKVM.NET package to IKVM package
 
