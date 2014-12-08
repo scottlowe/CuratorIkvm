@@ -1,3 +1,6 @@
+#### 0.5.9-beta - December 08 2014
+* Update IKVM version
+
 #### 0.5.8-beta - December 08 2014
 * Fix IKVM package dependency
 
