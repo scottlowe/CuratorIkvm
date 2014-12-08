@@ -17,7 +17,7 @@ open System.Net
 
 let project     = "CuratorIkvm"
 let summary     = "Curator client library for Zookeeper, IKVM version"
-let description = "Curator client library for Zookeeper. This is the IKVM version, which means that it is compiled from Java to .NET"
+let description = "Curator client library for Zookeeper. This is the IKVM version; which is to say that this is compiled from Java to .NET"
 let authors     = [ "Scott Lowe" ]
 let tags        = "Curator C# .Net IKVM Zookeeper"
 

@@ -5,8 +5,8 @@
     <version>@build.number@</version>
     <authors>@authors@</authors>
     <owners>@authors@</owners>
-    <licenseUrl>http://github.com/scottlowe/CuratorIkvm/blob/master/LICENSE.txt</licenseUrl>
-    <projectUrl>http://scottlowe.github.com/CuratorIkvm</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/apache/curator/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/scottlowe/CuratorIkvm</projectUrl>
     <iconUrl>http://curator.apache.org/images/curator-logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>@summary@</summary>
