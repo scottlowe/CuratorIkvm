@@ -78,9 +78,10 @@ Target "Build" (fun _ ->
     traceImportant "building with IKVM..."
 
     let ikvmArgs =
+        let version = release.NugetVersion.Split('-') |> Seq.head
         sprintf
             "-lib:target/dependency -recurse:target/dependency -target:library -version:%s -out:bin/Curator.dll"
-            release.NugetVersion
+            version
 
     let result =
         ExecProcess (fun info ->
