@@ -15,6 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{1F60
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CuratorIkvm.Tests", "CuratorIkvm.Tests\CuratorIkvm.Tests.fsproj", "{62773C74-3103-4947-95FE-6854BC5F2A47}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{BC9C5B69-52E2-4728-8BC4-96E7F039E77B}"
+	ProjectSection(SolutionItems) = preProject
+		nuget\CuratorIkvm.nuspec = nuget\CuratorIkvm.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

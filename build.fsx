@@ -17,7 +17,7 @@ open System.Net
 
 let project = "CuratorIkvm"
 let summary = "Curator client library & recipes for Zookeeper: IKVM version."
-let authors = [ "Scott Lowe" ]
+let authors = ["Scott Lowe"]
 let tags    = "Curator IKVM Zookeeper"
 
 let description =

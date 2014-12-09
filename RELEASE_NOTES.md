@@ -1,3 +1,6 @@
+#### 0.6.4-beta - December 12 2014
+* Specify references in order to avoid unneeded IKVM DLLs references in client projects
+
 #### 0.6.2-beta - December 09 2014
 * Set assembly version in Curator.dll
 * Remove dead code
