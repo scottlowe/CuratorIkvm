@@ -17,7 +17,7 @@ open System.Net
 
 let project = "CuratorIkvm"
 let summary = "Curator client library & recipes for Zookeeper: IKVM version."
-let authors = [ "Scott Lowe" ]
+let authors = ["Scott Lowe"]
 let tags    = "Curator IKVM Zookeeper"
 
 let description =
@@ -109,7 +109,8 @@ Target "NuGet" (fun _ ->
             OutputPath = "bin"
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
-            Dependencies = [ "IKVM", ikvmVersion ]})
+            Dependencies = [ "IKVM", ikvmVersion ]
+            Files = [ (@"..\bin\Curator.dll", Some "lib/net45", None) ]})
         ("nuget/" + project + ".nuspec")
 )
 
