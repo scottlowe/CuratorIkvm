@@ -15,12 +15,14 @@ open System.IO
 open System.Net
 
 
-let project     = "CuratorIkvm"
-let summary     = "Curator client library & recipes for Zookeeper: IKVM version."
-let description = "Curator client library & recipes for Zookeeper. This is the IKVM version; which is to say that this is compiled from Java to .NET"
-let authors     = [ "Scott Lowe" ]
-let tags        = "Curator C# .Net IKVM Zookeeper"
+let project = "CuratorIkvm"
+let summary = "Curator client library & recipes for Zookeeper: IKVM version."
+let authors = [ "Scott Lowe" ]
+let tags    = "Curator IKVM Zookeeper"
 
+let description =
+    "Curator client library & recipes for Zookeeper.
+    This is the IKVM version; which is to say that this is compiled from Java to .NET"
 
 let mavenVersion = "3.2.3"
 let mavenDirName = sprintf "apache-maven-%s" mavenVersion
@@ -37,8 +39,7 @@ let gitHome  = "https://github.com/" + gitOwner
 let gitName  = "CuratorIkvm"
 let gitRaw   = environVarOrDefault "gitRaw" "https://raw.github.com/scottlowe"
 
-// Read additional information from the release notes document
-let release = LoadReleaseNotes "RELEASE_NOTES.md"
+let releaseNotes = LoadReleaseNotes "RELEASE_NOTES.md"
 
 let downloadAndUnzipLib (binariesUri: string) (targetZip: string) =
     let wc = new WebClient()
@@ -78,7 +79,7 @@ Target "Build" (fun _ ->
     traceImportant "building with IKVM..."
 
     let ikvmArgs =
-        let version = release.NugetVersion.Split('-') |> Seq.head
+        let version = releaseNotes.NugetVersion.Split('-') |> Seq.head
         sprintf
             "-lib:target/dependency -recurse:target/dependency -target:library -version:%s -out:bin/Curator.dll"
             version
@@ -102,8 +103,8 @@ Target "NuGet" (fun _ ->
             Project = project
             Summary = summary
             Description = description
-            Version = release.NugetVersion
-            ReleaseNotes = String.Join(Environment.NewLine, release.Notes)
+            Version = releaseNotes.NugetVersion
+            ReleaseNotes = String.Join(Environment.NewLine, releaseNotes.Notes)
             Tags = tags
             OutputPath = "bin"
             AccessKey = getBuildParamOrDefault "nugetkey" ""
@@ -117,11 +118,11 @@ open Octokit
 
 Target "Release" (fun _ ->
     StageAll ""
-    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
+    Git.Commit.Commit "" (sprintf "Bump version to %s" releaseNotes.NugetVersion)
     Branches.push ""
 
-    Branches.tag "" release.NugetVersion
-    Branches.pushTag "" "origin" release.NugetVersion
+    Branches.tag "" releaseNotes.NugetVersion
+    Branches.pushTag "" "origin" releaseNotes.NugetVersion
 )
 
 Target "BuildPackage" DoNothing
