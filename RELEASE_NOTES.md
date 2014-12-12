@@ -1,4 +1,4 @@
-#### 0.6.5-beta - December 09 2014
+#### 0.6.6-beta - December 09 2014
 * Set assembly version in Curator.dll
 * Remove dead code
 * Make it clear in description that the Curator Recipes are included

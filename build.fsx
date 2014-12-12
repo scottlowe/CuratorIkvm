@@ -109,7 +109,8 @@ Target "NuGet" (fun _ ->
             OutputPath = "bin"
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey"
-            Dependencies = [ "IKVM", ikvmVersion ]})
+            Dependencies = [ "IKVM", ikvmVersion ]
+            Files = [ (@"..\bin\Curator.dll", Some "lib/net45", None) ]})
         ("nuget/" + project + ".nuspec")
 )
 
