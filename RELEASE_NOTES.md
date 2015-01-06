@@ -1,3 +1,7 @@
+#### 0.7.0-beta - January 07 2015
+* Include Curator Testing module/namespace
+* Improve Maven dependencies
+
 #### 0.6.6-beta - December 09 2014
 * Set assembly version in Curator.dll
 * Remove dead code
