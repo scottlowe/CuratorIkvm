@@ -24,7 +24,7 @@ let description =
     "Curator client library & recipes for Zookeeper.
     This is the IKVM version; which is to say that this is compiled from Java to .NET"
 
-let mavenVersion = "3.2.3"
+let mavenVersion = "3.2.5"
 let mavenDirName = sprintf "apache-maven-%s" mavenVersion
 let mavenBinariesUrl =
     sprintf "http://mirror.rackcentral.com.au/apache/maven/maven-3/%s/binaries/%s-bin.zip" mavenVersion mavenDirName
@@ -68,7 +68,7 @@ Target "InstallMavenDeps" (fun _ ->
 )
 
 Target "Clean" (fun _ ->
-    CleanDirs ["bin"; "temp"]
+    CleanDirs ["bin"; "temp"; "target/dependency"]
 )
 
 Target "CleanDocs" (fun _ ->
