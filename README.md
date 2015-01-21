@@ -14,3 +14,5 @@ In order to start the build and packaging:
     $ build.sh  // on mono
 
 This project uses the [F# Project Scaffold](http://fsprojects.github.io/ProjectScaffold/release-process.html "F# Project Scaffold").
+
+** Enable pre-release packages to use the [NuGet package](https://www.nuget.org/packages/CuratorIkvm/ "CuratorIkvm NuGet package").
