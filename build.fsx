@@ -9,6 +9,7 @@ open Fake.Git
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
 open Fake.FileUtils
+open Fake.FileSystemHelper
 open Fake.EnvironmentHelper
 open System
 open System.IO
@@ -29,7 +30,7 @@ let mavenDirName = sprintf "apache-maven-%s" mavenVersion
 let mavenBinariesUrl =
     sprintf "http://mirror.rackcentral.com.au/apache/maven/maven-3/%s/binaries/%s-bin.zip" mavenVersion mavenDirName
 
-let ikvmVersion = "8.0.5449.0"
+let ikvmVersion = "8.0.5449.1"
 let ikvmBinariesUrl = sprintf "http://www.frijters.net/ikvmbin-%s.zip" ikvmVersion
 
 // Git configuration (used for publishing documentation in gh-pages branch)
@@ -40,25 +41,38 @@ let gitName  = "CuratorIkvm"
 let gitRaw   = environVarOrDefault "gitRaw" "https://raw.github.com/scottlowe"
 
 let releaseNotes = LoadReleaseNotes "RELEASE_NOTES.md"
+let pathSeparator = Path.DirectorySeparatorChar.ToString() 
+let libDir = sprintf "%s%slib%s" currentDirectory pathSeparator pathSeparator
 
 let downloadAndUnzipLib (binariesUri: string) (targetZip: string) =
     let wc = new WebClient()
     wc.DownloadFile(new Uri(binariesUri), targetZip)
-    Unzip "lib/" targetZip
+    Unzip libDir targetZip
     rm targetZip
 
+Target "MakeDirectories" (fun _ ->
+    traceImportant (sprintf "Making directory %s, if it doesn't exist" libDir)
+    mkdir libDir
+)
+
 Target "DownloadMaven" (fun _ ->
-    downloadAndUnzipLib mavenBinariesUrl @"lib/maven.zip"
+    downloadAndUnzipLib mavenBinariesUrl (sprintf "%smaven.zip" libDir)
 )
 
 Target "DownloadIkvm" (fun _ ->
-    downloadAndUnzipLib ikvmBinariesUrl @"lib/ikvm.zip"
+    downloadAndUnzipLib ikvmBinariesUrl (sprintf "%sikvm.zip" libDir)
 )
 
 Target "InstallMavenDeps" (fun _ ->
+    let mvnExeName = if isUnix then "mvn" else "mvn.bat"
+    //let mvnExe = sprintf "%s%s/bin/%s" libDir mavenDirName mvnExeName
+    let mvnExe = Path.Combine(libDir, mavenDirName, "bin", mvnExeName)
+
+    if isUnix then Shell.Exec("chmod", "a+rx " + mvnExe) |> ignore
+
     let result =
         ExecProcess (fun info ->
-            info.FileName <- sprintf "lib/%s/bin/mvn.bat" mavenDirName
+            info.FileName <- mvnExe
             info.WorkingDirectory <- "./"
             info.Arguments <- "install dependency:copy-dependencies")
             (TimeSpan.FromMinutes 7.0)
@@ -77,6 +91,14 @@ Target "CleanDocs" (fun _ ->
 
 Target "Build" (fun _ ->
     traceImportant "building with IKVM..."
+    let versionedDir = sprintf "ikvm-%s" ikvmVersion
+    let ikvmFileExe = Path.Combine(currentDirectory, "lib", versionedDir, "bin", "ikvmc.exe")
+
+    if isUnix then Shell.Exec("chmod", "a+rx " + ikvmFileExe) |> ignore
+
+    let fileName =
+        if isUnix then "/usr/bin/mono"
+        else ikvmFileExe
 
     let ikvmArgs =
         let version = releaseNotes.NugetVersion.Split('-') |> Seq.head
@@ -84,11 +106,15 @@ Target "Build" (fun _ ->
             "-lib:target/dependency -recurse:target/dependency -target:library -version:%s -out:bin/Curator.dll"
             version
 
+    let processArgs =
+        if isUnix then sprintf "%s %s" ikvmFileExe ikvmArgs
+        else ikvmArgs
+
     let result =
         ExecProcess (fun info ->
-            info.FileName <- sprintf "lib/ikvm-%s/bin/ikvmc.exe " ikvmVersion
-            info.WorkingDirectory <- "./"
-            info.Arguments <- ikvmArgs)
+            info.FileName <- fileName
+            info.WorkingDirectory <- currentDirectory
+            info.Arguments <- processArgs)
             (TimeSpan.FromMinutes 5.0)
 
     if result <> 0 then
@@ -136,6 +162,7 @@ Target "All" DoNothing
 Target "BuildDll" DoNothing
 
 "BuildDll"
+    ==> "MakeDirectories"
     ==> "DownloadMaven"
     ==> "InstallMavenDeps"
     ==> "DownloadIkvm"

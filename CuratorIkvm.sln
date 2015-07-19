@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{1F60AECC-A8BB-4487-BC37-20ADF9022404}"
 	ProjectSection(SolutionItems) = preProject
 		build.fsx = build.fsx
@@ -18,6 +16,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{BC9C5B69-52E2-4728-8BC4-96E7F039E77B}"
 	ProjectSection(SolutionItems) = preProject
 		nuget\CuratorIkvm.nuspec = nuget\CuratorIkvm.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{474E77EA-A168-4FE3-BDED-B3E42325CE0B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global
