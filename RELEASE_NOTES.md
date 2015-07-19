@@ -1,3 +1,7 @@
+#### 0.8.0-beta - July 18 2015
+* Update IKVM
+* Add log4j dependency to reduce .exe startup warnings
+
 #### 0.7.0-beta - January 07 2015
 * Include Curator Testing module/namespace
 * Improve Maven dependencies
