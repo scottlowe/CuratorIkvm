@@ -12,7 +12,10 @@ In order to start the build and packaging:
 
     $ build.cmd // on windows    
     $ build.sh  // on mono
+    
+#### Background
+We wanted to automate Blue/Green deployment and failover of our services, so leader election was required. The LeaderLatch recipe has been working very well for us, but be advised that we haven't used all the Curator features or its recipes.
 
 This project uses the [F# Project Scaffold](http://fsprojects.github.io/ProjectScaffold/release-process.html "F# Project Scaffold").
 
-** Enable pre-release packages to use the [NuGet package](https://www.nuget.org/packages/CuratorIkvm/ "CuratorIkvm NuGet package").
+** The [NuGet package](https://www.nuget.org/packages/CuratorIkvm/ "CuratorIkvm NuGet package") is here.
