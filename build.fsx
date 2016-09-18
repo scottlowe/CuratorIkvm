@@ -28,7 +28,7 @@ let description =
 let mavenVersion = "3.2.5"
 let mavenDirName = sprintf "apache-maven-%s" mavenVersion
 let mavenBinariesUrl =
-    sprintf "http://mirror.rackcentral.com.au/apache/maven/maven-3/%s/binaries/%s-bin.zip" mavenVersion mavenDirName
+    sprintf "http://mirror.catn.com/pub/apache/maven/maven-3/%s/binaries/%s-bin.zip" mavenVersion mavenDirName
 
 let ikvmVersion = "8.0.5449.1"
 let ikvmBinariesUrl = sprintf "http://www.frijters.net/ikvmbin-%s.zip" ikvmVersion

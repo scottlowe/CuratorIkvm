@@ -1,3 +1,6 @@
+#### 1.0.0 - Sepetember 18 2018
+* LeaderLatch has been used in Production for 19 months. Out of Nuget beta.
+
 #### 0.8.0-beta - July 18 2015
 * Update IKVM
 * Add log4j dependency to reduce .exe startup warnings
